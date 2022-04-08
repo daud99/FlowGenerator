@@ -9,13 +9,14 @@ logging.config.dictConfig(MY_LOGGING_CONFIG)
 logger = logging.getLogger(__name__)
 
 
-def snifThread(input_file,input_interface,output_mode,output):
+def snifThread(input_file,input_interface,output_mode,output, label):
     try:
         session_instance = sniffer.createSniffer(
         input_file,
         input_interface,
         output_mode,
-        output)
+        output,
+        label)
 
         session_instance.start()
 
@@ -53,9 +54,13 @@ def main():
     dest="output",
     help="default: %(default)s, The file output will be written to.")
 
+    parser.add_argument('--class','--label',default='NeedManualLabel',
+    dest="label",
+    help="default: %(default)s, The entire generated CSV flow labeled with.")
+
     args = parser.parse_args()
 
-    snifThread(args.input_file,args.input_interface,args.output_mode,args.output)
+    snifThread(args.input_file,args.input_interface,args.output_mode,args.output, args.label)
 
 if __name__ == "__main__":
     main()

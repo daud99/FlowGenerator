@@ -123,7 +123,7 @@ class FlowSession(DefaultSession):
                     self.csv_writer.writerow(keys)
                 # print(data.values())
                 values = list(data.values())
-                values.append('NeedManualLabel')
+                values.append(self.label)
                 self.csv_writer.writerow(values)
                 self.csv_line += 1
 
@@ -131,7 +131,7 @@ class FlowSession(DefaultSession):
         # if not self.url_model:
         #     print("Garbage Collection Finished. Flows = {}".format(len(self.flows)))
 
-def generate_session_class(output_mode, output_file, url_model):
+def generate_session_class(output_mode, output_file, label, url_model):
     return type(
         "NewFlowSession",
         (FlowSession,),
@@ -139,6 +139,7 @@ def generate_session_class(output_mode, output_file, url_model):
             "output_mode": output_mode,
             "output_file": output_file,
             "url_model": url_model,
+            "label": label
         },
     )
 
