@@ -9,3 +9,4 @@ machinelearning/__pycache__/*
 flow.csv
 models/*
 __pycache__/*
+normal/*

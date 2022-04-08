@@ -10,6 +10,8 @@ from features.packet_length import PacketLength
 from features.packet_time import PacketTime
 from utils import get_statistics
 
+import numpy as np
+
 
 class Flow:
     """This class summarizes the values of the features of the network flows"""
@@ -149,35 +151,31 @@ class Flow:
             "PSH Flag Count": flag_count.has_flag("PSH"),
             "ACK Flag Count": flag_count.has_flag("ACK"),
             "URG Flag Count": flag_count.has_flag("URG"),
-            "CWR Flag Count": flag_count.has_flag("URG"),
+            # "CWR Flag Count": flag_count.has_flag("URG"),
             "ECE Flag Count": flag_count.has_flag("ECE"),
             # Response Time
             "Down/Up Ratio": packet_count.get_down_up_ratio(),
             "Average Packet Size": packet_length.get_avg(),
-            "Fwd Segment Size Avg": float(packet_length.get_mean(PacketDirection.FORWARD)),
-            "Bwd Segment Size Avg": float(packet_length.get_mean(PacketDirection.REVERSE)),
+            # "Fwd Segment Size Avg": float(packet_length.get_mean(PacketDirection.FORWARD)),
+            # "Bwd Segment Size Avg": float(packet_length.get_mean(PacketDirection.REVERSE)),
             "Fwd Bytes/Bulk Avg": float(
                 flow_bytes.get_bytes_per_bulk(PacketDirection.FORWARD)
             ),
             "Fwd Packet/Bulk Avg": float(
                 flow_bytes.get_packets_per_bulk(PacketDirection.FORWARD)
             ),
-            "Fwd Bulk Rate Avg": float(
-                flow_bytes.get_bulk_rate(PacketDirection.FORWARD)
-            ),
+            "Fwd Bulk Rate Avg": self.NaNOrFloat(flow_bytes.get_bulk_rate(PacketDirection.FORWARD)),
             "Bwd Bytes/Bulk Avg": float(
                 flow_bytes.get_bytes_per_bulk(PacketDirection.REVERSE)
             ),
             "Bwd Packet/Bulk Avg": float(
                 flow_bytes.get_packets_per_bulk(PacketDirection.REVERSE)
             ),
-            "Bwd Bulk Rate Avg": float(
-                flow_bytes.get_bulk_rate(PacketDirection.REVERSE)
-            ),
-            "Subflow Fwd Packets": packet_count.get_total(PacketDirection.FORWARD),
-            "Subflow Fwd Bytes": packet_length.get_total(PacketDirection.FORWARD),
-            "Subflow Bwd Packets": packet_count.get_total(PacketDirection.REVERSE),
-            "Subflow Bwd Bytes": packet_length.get_total(PacketDirection.REVERSE),
+            "Bwd Bulk Rate Avg": self.NaNOrFloat(flow_bytes.get_bulk_rate(PacketDirection.REVERSE)),
+            # "Subflow Fwd Packets": packet_count.get_total(PacketDirection.FORWARD),
+            # "Subflow Fwd Bytes": packet_length.get_total(PacketDirection.FORWARD),
+            # "Subflow Bwd Packets": packet_count.get_total(PacketDirection.REVERSE),
+            # "Subflow Bwd Bytes": packet_length.get_total(PacketDirection.REVERSE),
             "FWD Init Win Bytes": self.init_window_size[PacketDirection.FORWARD],
             "Bwd Init Win Bytes": self.init_window_size[PacketDirection.REVERSE],
             "Fwd Act Data Pkts": packet_count.has_payload(PacketDirection.FORWARD),
@@ -348,3 +346,9 @@ class Flow:
     @property
     def duration(self):
         return self.latest_timestamp - self.start_timestamp
+
+    def NaNOrFloat(self, value):
+        if isinstance(value, type(None)):
+            return np.NaN
+        else:
+            return float(value)

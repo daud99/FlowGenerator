@@ -277,5 +277,5 @@ class FlowBytes:
                         / self.feature.backward_bulk_duration
                     )
         except ZeroDivisionError:
-            return 0
+            return None
         return 0
