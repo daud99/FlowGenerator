@@ -2,6 +2,7 @@ venv/*
 setting/__pycache__/*
 mlridin.log
 pcaps/*
+csv/*
 features/__pycache__/*
 features/context/__pycache__/*
 machinelearning/__pycache__/*

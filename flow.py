@@ -1,6 +1,5 @@
 from enum import Enum
 from typing import Any
-import decimal
 import constants
 from features.context import packet_flow_key
 from features.context.packet_direction import PacketDirection
