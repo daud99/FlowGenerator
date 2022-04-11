@@ -1,4 +1,4 @@
-# mlridin
+# Flow Generator
 
 ## Creating Virtualenv
 ```sh
@@ -18,7 +18,7 @@ pip install -r requirements.txt
 
 ## Usage
 ```sh
-usage: mlridin [-h] (-i INPUT_INTERFACE | -f INPUT_FILE) [-c] [--output-file OUTPUT]
+usage: python main.py [-h] (-i INPUT_INTERFACE | -f INPUT_FILE) [-c] [--output-file OUTPUT]
 
 A Machine Learning based Real-time Intrusion Detection System in Network
 
